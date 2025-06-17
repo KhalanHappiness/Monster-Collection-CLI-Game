@@ -1,8 +1,14 @@
 from models import MonsterSpecies
-from base import Session
+from models.base import Session
 
 def seed_monsters():
     session = Session()
+
+    # Prevent re-seeding if data already exists
+    if session.query(MonsterSpecies).first():
+        print("Monster species already seeded. Skipping.")
+        return
+
     species_list = [
         {"name": "Flamewyrm", "type": "Fire", "base_hp": 45, "base_attack": 60, "base_defense": 40, "rarity": "Common", "abilities": "Fire Blast"},
         {"name": "Aquafin", "type": "Water", "base_hp": 50, "base_attack": 55, "base_defense": 45, "rarity": "Common", "abilities": "Water Pulse"},
@@ -20,8 +26,13 @@ def seed_monsters():
         {"name": "Firetail", "type": "Fire", "base_hp": 40, "base_attack": 60, "base_defense": 40, "rarity": "Common", "abilities": "Tail Whip"},
         {"name": "Hydrofin", "type": "Water", "base_hp": 55, "base_attack": 60, "base_defense": 50, "rarity": "Common", "abilities": "Hydro Pump"},
     ]
+
     for data in species_list:
         monster = MonsterSpecies(**data)
         session.add(monster)
+
     session.commit()
-    print("Monster species seeded.")
+    print("Monster species seeded successfully.")
+
+if __name__ == "__main__":
+    seed_monsters()
