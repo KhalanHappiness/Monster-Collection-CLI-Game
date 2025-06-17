@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 from .base import Base
 
 class MonsterSpecies(Base):
@@ -11,3 +12,8 @@ class MonsterSpecies(Base):
     base_defense = Column(Integer)
     rarity = Column(String)
     abilities = Column(String)
+
+    player_monsters = relationship('PlayerMonster', back_populates='species')
+
+    def __repr__(self):
+       return f"<MonsterSpecies(id={self.id}, name='{self.name}', type='{self.type}', rarity='{self.rarity}')>"
