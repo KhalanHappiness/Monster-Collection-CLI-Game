@@ -7,7 +7,9 @@ class MonsterSpecies(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True)
     type = Column(String)
-    base_stats = Column(Integer)
+    base_hp = Column(Integer)
+    base_attack = Column(Integer)
+    base_defense = Column(Integer)
     rarity = Column(String)
     abilities = Column(String)
 
